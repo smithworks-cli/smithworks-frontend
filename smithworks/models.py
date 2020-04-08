@@ -1,9 +1,29 @@
 from django.db import models
 
+import uuid
+
 # Create your models here.
 
 
-class User(models.Model):
+class Forge(models.Model):
+    """Model definition for Forge."""
+
+    # TODO: Define fields here
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        """Meta definition for Forge."""
+
+        abstract = True
+
+    def __str__(self):
+        """Unicode representation of Forge."""
+        pass
+
+
+class User(Forge):
     """Model definition for User."""
 
     # TODO: Define fields here
@@ -19,7 +39,7 @@ class User(models.Model):
         pass
 
 
-class Ip(models.Model):
+class Ip(Forge):
     """Model definition for Ip."""
 
     # TODO: Define fields here
@@ -35,7 +55,7 @@ class Ip(models.Model):
         pass
 
 
-class Profile(models.Model):
+class Profile(Forge):
     """Model definition for Profile."""
 
     # TODO: Define fields here
@@ -51,7 +71,7 @@ class Profile(models.Model):
         pass
 
 
-class SubscriptionTier(models.Model):
+class SubscriptionTier(Forge):
     """Model definition for SubscriptionTier."""
 
     # TODO: Define fields here
@@ -67,7 +87,7 @@ class SubscriptionTier(models.Model):
         pass
 
 
-class Game(models.Model):
+class Game(Forge):
     """Model definition for Game."""
 
     # TODO: Define fields here
@@ -83,7 +103,7 @@ class Game(models.Model):
         pass
 
 
-class Url(models.Model):
+class Url(Forge):
     """Model definition for Url."""
 
     # TODO: Define fields here
@@ -99,7 +119,7 @@ class Url(models.Model):
         pass
 
 
-class Configuration(models.Model):
+class Configuration(Forge):
     """Model definition for Configuration."""
 
     # TODO: Define fields here
@@ -115,7 +135,7 @@ class Configuration(models.Model):
         pass
 
 
-class Schedule(models.Model):
+class Schedule(Forge):
     """Model definition for Schedule."""
 
     # TODO: Define fields here
@@ -131,7 +151,7 @@ class Schedule(models.Model):
         pass
 
 
-class Invitee(models.Model):
+class Invitee(Forge):
     """Model definition for Invitee."""
 
     # TODO: Define fields here
@@ -147,7 +167,7 @@ class Invitee(models.Model):
         pass
 
 
-class Character(models.Model):
+class Character(Forge):
     """Model definition for Character."""
 
     # TODO: Define fields here
@@ -163,7 +183,7 @@ class Character(models.Model):
         pass
 
 
-class Notification(models.Model):
+class Notification(Forge):
     """Model definition for Notification."""
 
     # TODO: Define fields here
@@ -179,7 +199,7 @@ class Notification(models.Model):
         pass
 
 
-class DigitalOcean(models.Model):
+class DigitalOcean(Forge):
     """Model definition for DigitalOcean."""
 
     # TODO: Define fields here
