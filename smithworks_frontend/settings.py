@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "tailwind",
     "theme",
     "smithworks",
+    "account",
 ]
 
 MIDDLEWARE = [
@@ -117,3 +118,5 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 TAILWIND_APP_NAME = "theme"
+
+AUTH_USER_MODEL = "account.Account"

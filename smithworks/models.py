@@ -27,6 +27,8 @@ class User(Forge):
     """Model definition for User."""
 
     # TODO: Define fields here
+    email = models.CharField(max_length=50)
+    failed_logins = models.IntegerField()
 
     class Meta:
         """Meta definition for User."""
