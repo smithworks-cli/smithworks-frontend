@@ -44,7 +44,12 @@ class User(Forge):
 class Ip(Forge):
     """Model definition for Ip."""
 
-    # TODO: Define fields here
+    # Ip fields
+    ip_address = models.GenericIPAddressField(protocol='both', unpack_ipv4=False)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=2)
+    country = models.CharField(max_length=50)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
 
     class Meta:
         """Meta definition for Ip."""
@@ -76,7 +81,9 @@ class Profile(Forge):
 class SubscriptionTier(Forge):
     """Model definition for SubscriptionTier."""
 
-    # TODO: Define fields here
+    # SubscriptionTier fields
+    tier_level = models.IntegerField(max_length=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
 
     class Meta:
         """Meta definition for SubscriptionTier."""
@@ -92,7 +99,11 @@ class SubscriptionTier(Forge):
 class Game(Forge):
     """Model definition for Game."""
 
-    # TODO: Define fields here
+    # Game fields
+    game_name = models.CharField(max_length=50)
+    number_of_deployments = models.PositiveIntegerField
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    url = models.OneToOneField(Url, on_delete=models.CASCADE)    
 
     class Meta:
         """Meta definition for Game."""
@@ -108,7 +119,8 @@ class Game(Forge):
 class Url(Forge):
     """Model definition for Url."""
 
-    # TODO: Define fields here
+    # Url fields
+    url = models.URLField(max_length=200)
 
     class Meta:
         """Meta definition for Url."""
@@ -124,7 +136,21 @@ class Url(Forge):
 class Configuration(Forge):
     """Model definition for Configuration."""
 
-    # TODO: Define fields here
+    # Choices for platform field
+    DIGITAL_OCEAN = 'DO'
+    AMAZON_WEB_SERVICES = 'AWS'
+    GOOGLE_CLOUD_PLATFORM = 'GPC'
+    PLATFORM_CHOICES = [
+        (DIGITAL_OCEAN, 'Digital Ocean'),
+        (AMAZON_WEB_SERVICES, 'Amazon Web Services'),
+        (GOOGLE_CLOUD_PLATFORM, 'Google Cloud Platform')
+    ]
+    # Configuration fields
+    platform = models.CharField(max_length=3, choices=PLATFORM_CHOICES, default=DIGITAL_OCEAN)
+    # TODO do we actually need a reference to the user
+    #user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    game = models.OneToOneField(Game, on_delete=models.CASCADE)
+
 
     class Meta:
         """Meta definition for Configuration."""
@@ -140,7 +166,11 @@ class Configuration(Forge):
 class Schedule(Forge):
     """Model definition for Schedule."""
 
-    # TODO: Define fields here
+    # Schedule fields
+    game_date = models.DateField(auto_now=False, auto_now_add=False)
+    game_time = models.TimeField(auto_now=False, auto_now_add=False)
+    notify_users = models.BooleanField()
+    game = models.OneToOneField(Game, on_delete=models.CASCADE)
 
     class Meta:
         """Meta definition for Schedule."""
@@ -156,7 +186,13 @@ class Schedule(Forge):
 class Invitee(Forge):
     """Model definition for Invitee."""
 
-    # TODO: Define fields here
+    # Invitee fields
+    email_address = models.EmailField(max_length=254)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    timezone = models.CharField(max_length=3)
+    number_of_emails = models.PositiveIntegerField()
+    game = models.OneToOneField(Game, on_delete=models.CASCADE)
 
     class Meta:
         """Meta definition for Invitee."""
@@ -172,7 +208,10 @@ class Invitee(Forge):
 class Character(Forge):
     """Model definition for Character."""
 
-    # TODO: Define fields here
+    # Character Fields
+    character_name = models.CharField(max_length=50)
+    dndbeyond_charactersheet_url = models.URLField(max_length=200)
+    invitee = models.ForeignKey(Invitee, on_delete=models.CASCADE, related_name='invitee')
 
     class Meta:
         """Meta definition for Character."""
@@ -188,7 +227,10 @@ class Character(Forge):
 class Notification(Forge):
     """Model definition for Notification."""
 
-    # TODO: Define fields here
+    # Notification fields
+    notify_date = models.DateField(auto_now=False, auto_now_add=False)
+    notify_time = models.TimeField(auto_now=False, auto_now_add=False)
+    invitee = models.ForeignKey(Invitee, on_delete=models.CASCADE, related_name='invitee')
 
     class Meta:
         """Meta definition for Notification."""
@@ -204,7 +246,9 @@ class Notification(Forge):
 class DigitalOcean(Forge):
     """Model definition for DigitalOcean."""
 
-    # TODO: Define fields here
+    # DigitalOcean fields
+    access_key = models.CharField(max_length=50)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='game')
 
     class Meta:
         """Meta definition for DigitalOcean."""
