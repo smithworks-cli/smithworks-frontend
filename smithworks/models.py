@@ -23,24 +23,6 @@ class Forge(models.Model):
         pass
 
 
-class User(Forge):
-    """Model definition for User."""
-
-    # TODO: Define fields here
-    email = models.CharField(max_length=50)
-    failed_logins = models.IntegerField()
-
-    class Meta:
-        """Meta definition for User."""
-
-        verbose_name = "User"
-        verbose_name_plural = "Users"
-
-    def __str__(self):
-        """Unicode representation of User."""
-        pass
-
-
 class Ip(Forge):
     """Model definition for Ip."""
 

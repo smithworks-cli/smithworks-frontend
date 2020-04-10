@@ -38,6 +38,7 @@ class Account(AbstractBaseUser):
     username = models.CharField(unique=True, max_length=50)
     date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

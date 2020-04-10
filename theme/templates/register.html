@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<h2>Register</h2>
+
+<form action="" method="post" class=>
+    {% csrf_token %}
+    {% for field in registration_form %}
+    <div>
+        <label class="block text-sm font-medium leading-5 text-gray-700">{{ field.label_tag }}</label>
+        {{ field }}
+        <div class="mt-1 relative rounded-md shadow-sm">
+        </div>
+
+        {% if field.help_text %}
+        <small style="color: grey;"></small>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <button type="submit">Register</button>
+
+</form>
+
+{% endblock content %}
