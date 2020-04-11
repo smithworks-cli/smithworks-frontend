@@ -27,8 +27,14 @@ def registration_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect("home")
+    return redirect("login")
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return render(request, "homepage.html")
     return render(request, "login.html")
+
+
+def home_view(request):
+    return render(request, "homepage.html")

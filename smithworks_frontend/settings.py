@@ -140,3 +140,5 @@ ACCOUNT_USERNAME_REQUIRED = False
 SITE_ID = 1
 
 SOCIALACCOUNT_PROVIDERS = {"digitalocean": {"SCOPE": ["read write",],}}
+
+LOGIN_REDIRECT_URL = "/homepage/"
