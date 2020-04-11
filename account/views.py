@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 
 # Create your views here.
 
@@ -23,3 +23,12 @@ def registration_view(request):
         form = RegistrationForm()
         context["registration_form"] = form
     return render(request, "register.html", context)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("home")
+
+
+def login_view(request):
+    return render(request, "login.html")
