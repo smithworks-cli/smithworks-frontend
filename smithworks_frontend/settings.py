@@ -36,17 +36,11 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.sites",
     "django.contrib.staticfiles",
     "tailwind",
     "theme",
     "smithworks",
-    "account.apps.AccountConfig",
-    ## Allauth below here
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.digitalocean",
+    "account",
 ]
 
 MIDDLEWARE = [
@@ -72,8 +66,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                # Django Allauth
-                "django.template.context_processors.request",
             ],
         },
     },
@@ -91,11 +83,6 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
-
-AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-)
 
 
 # Password validation
@@ -132,13 +119,4 @@ STATIC_URL = "/static/"
 
 TAILWIND_APP_NAME = "theme"
 
-AUTH_USER_MODEL = "custom_account.Account"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_USERNAME_REQUIRED = False
-
-SITE_ID = 1
-
-SOCIALACCOUNT_PROVIDERS = {"digitalocean": {"SCOPE": ["read write",],}}
-
-LOGIN_REDIRECT_URL = "/homepage/"
+AUTH_USER_MODEL = "account.Account"

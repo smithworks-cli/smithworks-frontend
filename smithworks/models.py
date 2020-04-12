@@ -1,9 +1,8 @@
 from django.db import models
-from account.models import Account
+
 import uuid
 
 # Create your models here.
-from smithworks.generators.utils import random_character, random_game, random_url
 
 
 class Forge(models.Model):
@@ -28,11 +27,11 @@ class Ip(Forge):
     """Model definition for Ip."""
 
     # Ip fields
-    ip_address = models.GenericIPAddressField(protocol="both", unpack_ipv4=False)
+    ip_address = models.GenericIPAddressField(protocol='both', unpack_ipv4=False)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=2)
     country = models.CharField(max_length=50)
-    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
 
     class Meta:
         """Meta definition for Ip."""
@@ -48,17 +47,8 @@ class Ip(Forge):
 class Profile(Forge):
     """Model definition for Profile."""
 
-    user_uuid = models.ForeignKey(Account, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    address1 = models.CharField(max_length=100)
-    address2 = models.CharField(max_length=100)
-    city = models.CharField(max_length=50)
-    state = models.CharField(max_length=2)
-    zipcode = models.IntegerField(7)
-    phone_number = models.IntegerField(12)
-    date_of_birth = models.DateField(auto_now=False, auto_now_add=False)
-    
+    # TODO: Define fields here
+
     class Meta:
         """Meta definition for Profile."""
 
@@ -74,8 +64,8 @@ class SubscriptionTier(Forge):
     """Model definition for SubscriptionTier."""
 
     # SubscriptionTier fields
-    tier_level = models.IntegerField()
-    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    tier_level = models.IntegerField(max_length=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
 
     class Meta:
         """Meta definition for SubscriptionTier."""
@@ -85,6 +75,26 @@ class SubscriptionTier(Forge):
 
     def __str__(self):
         """Unicode representation of SubscriptionTier."""
+        pass
+
+
+class Game(Forge):
+    """Model definition for Game."""
+
+    # Game fields
+    game_name = models.CharField(max_length=50)
+    number_of_deployments = models.PositiveIntegerField
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    url = models.OneToOneField(Url, on_delete=models.CASCADE)    
+
+    class Meta:
+        """Meta definition for Game."""
+
+        verbose_name = "Game"
+        verbose_name_plural = "Games"
+
+    def __str__(self):
+        """Unicode representation of Game."""
         pass
 
 
@@ -105,45 +115,24 @@ class Url(Forge):
         pass
 
 
-class Game(Forge):
-    """Model definition for Game."""
-
-    # Game fields
-    game_name = models.CharField(max_length=200)
-    number_of_deployments = models.PositiveIntegerField()
-    user = models.ForeignKey(Account, on_delete=models.CASCADE)
-    url = models.OneToOneField(Url, on_delete=models.CASCADE, unique=True)
-
-    class Meta:
-        """Meta definition for Game."""
-
-        verbose_name = "Game"
-        verbose_name_plural = "Games"
-
-    def __str__(self):
-        """Unicode representation of Game."""
-        pass
-
-
 class Configuration(Forge):
     """Model definition for Configuration."""
 
     # Choices for platform field
-    DIGITAL_OCEAN = "DO"
-    AMAZON_WEB_SERVICES = "AWS"
-    GOOGLE_CLOUD_PLATFORM = "GPC"
+    DIGITAL_OCEAN = 'DO'
+    AMAZON_WEB_SERVICES = 'AWS'
+    GOOGLE_CLOUD_PLATFORM = 'GPC'
     PLATFORM_CHOICES = [
-        (DIGITAL_OCEAN, "Digital Ocean"),
-        (AMAZON_WEB_SERVICES, "Amazon Web Services"),
-        (GOOGLE_CLOUD_PLATFORM, "Google Cloud Platform"),
+        (DIGITAL_OCEAN, 'Digital Ocean'),
+        (AMAZON_WEB_SERVICES, 'Amazon Web Services'),
+        (GOOGLE_CLOUD_PLATFORM, 'Google Cloud Platform')
     ]
     # Configuration fields
-    platform = models.CharField(
-        max_length=3, choices=PLATFORM_CHOICES, default=DIGITAL_OCEAN
-    )
+    platform = models.CharField(max_length=3, choices=PLATFORM_CHOICES, default=DIGITAL_OCEAN)
     # TODO do we actually need a reference to the user
-    # user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='user')
-    game = models.OneToOneField(Game, on_delete=models.CASCADE, blank=True)
+    #user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    game = models.OneToOneField(Game, on_delete=models.CASCADE)
+
 
     class Meta:
         """Meta definition for Configuration."""
@@ -202,9 +191,9 @@ class Character(Forge):
     """Model definition for Character."""
 
     # Character Fields
-    character_name = models.CharField(max_length=200, blank=True)
-    dndbeyond_charactersheet_url = models.URLField(max_length=200, blank=True)
-    invitee = models.ForeignKey(Invitee, on_delete=models.CASCADE, blank=True)
+    character_name = models.CharField(max_length=50)
+    dndbeyond_charactersheet_url = models.URLField(max_length=200)
+    invitee = models.ForeignKey(Invitee, on_delete=models.CASCADE, related_name='invitee')
 
     class Meta:
         """Meta definition for Character."""
@@ -223,7 +212,7 @@ class Notification(Forge):
     # Notification fields
     notify_date = models.DateField(auto_now=False, auto_now_add=False)
     notify_time = models.TimeField(auto_now=False, auto_now_add=False)
-    invitee = models.ForeignKey(Invitee, on_delete=models.CASCADE)
+    invitee = models.ForeignKey(Invitee, on_delete=models.CASCADE, related_name='invitee')
 
     class Meta:
         """Meta definition for Notification."""
@@ -241,7 +230,7 @@ class DigitalOcean(Forge):
 
     # DigitalOcean fields
     access_key = models.CharField(max_length=50)
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='game')
 
     class Meta:
         """Meta definition for DigitalOcean."""

@@ -19,14 +19,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from account.views import registration_view
-from django.conf.urls import url
 
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    url(r"^accounts/", include("allauth.urls")),
-]
-
-urlpatterns += [
-    path("", include("account.urls")),
-    path("", include("smithworks.urls")),
-]
+urlpatterns = [path("admin/", admin.site.urls)]
+urlpatterns += [path("register/", registration_view, name="register")]

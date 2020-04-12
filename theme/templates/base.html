@@ -1,5 +1,4 @@
 {% load static %}
-{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,23 +15,12 @@
 </head>
 
 <body class="bg-grey-lightest font-serif leading-normal tracking-normal">
-  <!-- <h1>Django Login Mega-Tutorial</h1>
-    {% if user.is_authenticated %}
-  <p>Welcome {{ user.username }} !!!</p>
-  <p><a href="{% url 'account_logout' %}">Log out</a>
-    {% else %}
-    <p>Sign Up</a></p>
-    <p><a href="{% url 'account_login' %}">Log In </a></p>
-    <p><a href="{% provider_login_url 'digitalocean' %}">Log In with DigitalOcean</a></p> 
-  {% endif %} -->
 
-  {% block homepage %}
-
-  {% endblock homepage %}
 
   {% block content %}
 
   {% endblock content %}
+
 
 </body>
 
