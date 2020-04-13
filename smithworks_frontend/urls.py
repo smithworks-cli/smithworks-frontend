@@ -18,7 +18,5 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from account.views import registration_view
-
 urlpatterns = [path("admin/", admin.site.urls)]
-urlpatterns += [path("register/", registration_view, name="register")]
+urlpatterns += [path("", include("smithworks.urls"))]

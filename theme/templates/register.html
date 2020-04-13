@@ -1,27 +1,51 @@
 {% extends 'base.html' %}
 
-
-
 {% block content %}
 
-<h2>Register</h2>
-
-<form action="" method="post" class=>
-    {% csrf_token %}
-    {% for field in registration_form %}
-    <div>
-        <label class="block text-sm font-medium leading-5 text-gray-700">{{ field.label_tag }}</label>
-        {{ field }}
-        <div class="mt-1 relative rounded-md shadow-sm">
-        </div>
-
-        {% if field.help_text %}
-        <small style="color: grey;"></small>
-        {% endif %}
+<div class="min-h-screen bg-white flex">
+    <div class="hidden lg:block relative w-0 flex-1">
+        <img class="absolute inset-0 h-full w-full object-cover"
+            src="https://images.unsplash.com/photo-1569774813410-fd936b4eb678?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1062&q=80"
+            alt="" />
     </div>
-    {% endfor %}
-    <button type="submit">Register</button>
+    <div class="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+        <div class="mx-auto w-full max-w-sm">
+            <div>
+                <h2 class="mt-6 text-3xl leading-9 font-extrabold text-gray-900">
+                    Create your account
+                </h2>
+            </div>
 
-</form>
+            <div class="mt-8">
+                <div class="mt-6">
+                    <form action="" method="post" class=>
+                        {% csrf_token %}
+                        {% for field in registration_form %}
+                        <div>
+                            <label
+                                class="block text-sm font-medium leading-5 text-gray-700">{{ field.label_tag }}</label>
+                            <div class="mt-1 relative rounded-md shadow-sm">
+                                {{ field }}
+                            </div>
 
+                            {% if field.help_text %}
+                            <small style="color: grey;"></small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        <div class="mt-6">
+                            <span class="block w-full rounded-md shadow-sm">
+                                <button type="submit"
+                                    class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                                    Register
+                                </button>
+                            </span>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
