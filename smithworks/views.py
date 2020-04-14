@@ -34,6 +34,7 @@ def save_profile(request):
         form = ProfileForm(request.POST)
         if form.is_valid():
             form.save(commit=True)
-            return redirect
+            #TODO Should this redirect to the profile or dashboard
+            return redirect("dashboard")
         else:
             return redirect("dashboard")
