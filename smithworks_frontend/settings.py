@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "theme",
     "smithworks",
     "account",
+    "phone_field",
 ]
 
 MIDDLEWARE = [

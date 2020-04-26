@@ -16,12 +16,13 @@ Including another URLconf
 from django.urls import path
 
 from account.views import registration_view
-from smithworks.views import dashboard, profile
+from smithworks.views import dashboard, profile, get_profile
 
 # Smithworks URLs
 urlpatterns = [
     path("dashboard/", dashboard, name="dashboard"),
     path("profile/", profile, name="profile"),
+    path("profile/<uuid:user>", get_profile, name="get_profile"),
 ]
 
 # Alternate view folders

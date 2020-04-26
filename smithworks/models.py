@@ -1,5 +1,6 @@
 from django.db import models
 from account.models import Account
+from phone_field import PhoneField
 import uuid
 
 # Create your models here.
@@ -47,7 +48,16 @@ class Ip(Forge):
 class Profile(Forge):
     """Model definition for Profile."""
 
-    # TODO: Define fields here
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    address_1 = models.CharField(max_length=60, null=True)
+    address_2 = models.CharField(max_length=60, null=True)
+    city = models.CharField(max_length=60, null=True)
+    state = models.CharField(max_length=2)
+    zip_code = models.CharField(max_length=5, null=True)
+    phone_number = PhoneField(blank=True)
+    date_of_birth = models.DateField(null=True)
+    users = models.ForeignKey(Account, on_delete=models.CASCADE)
 
     class Meta:
         """Meta definition for Profile."""
