@@ -16,7 +16,7 @@ def dashboard(request):
 @login_required()
 def profile(request):
     try:
-        user_profile = Profile.objects.get(pk=request.user.id)
+        user_profile = Profile.objects.get(users_id=request.user.id)
         profile_form = ProfileForm(instance=user_profile)
     except Profile.DoesNotExist as identifier:
         profile_form = ProfileForm()
@@ -30,7 +30,9 @@ def save_profile(request):
     if request.POST:
         form = ProfileForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+            profile = form.save(commit=False)
+            profile.users = request.user
+            profile.save()
             #TODO Should this redirect to the profile or dashboard
             return redirect("dashboard")
         else:
