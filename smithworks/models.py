@@ -9,7 +9,6 @@ import uuid
 class Forge(models.Model):
     """Model definition for Forge."""
 
-    # TODO: Define fields here
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
@@ -242,6 +241,7 @@ class DigitalOcean(Forge):
     # DigitalOcean fields
     access_key = models.CharField(max_length=50)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    account_id = models.ForeignKey(Account, on_delete=models.CASCADE)
 
     class Meta:
         """Meta definition for DigitalOcean."""

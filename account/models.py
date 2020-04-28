@@ -32,7 +32,6 @@ class CustomAccountManager(BaseUserManager):
 class Account(AbstractBaseUser):
     """Model definition for Account."""
 
-    # TODO: Define fields here
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(verbose_name="email", max_length=80, unique=True)
     username = models.CharField(unique=True, max_length=50)
