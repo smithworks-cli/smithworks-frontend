@@ -15,16 +15,13 @@ def dashboard(request):
 
 @login_required()
 def profile(request):
-    context = {"page_name": "Profile"}
+    try:
+        user_profile = Profile.objects.get(pk=request.user.id)
+        profile_form = ProfileForm(instance=user_profile)
+    except Profile.DoesNotExist as identifier:
+        profile_form = ProfileForm()
+    context = {"page_name": "Profile", "profile_form": profile_form}
     return render(request, "profile.html", context)
-
-
-@require_GET
-@login_required
-def get_profile(request, user):
-    user_profile = Profile.objects.get(pk=user)
-    form = ProfileForm(instance=user_profile)
-
 
 require_POST
 @login_required()
