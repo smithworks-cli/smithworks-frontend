@@ -8,6 +8,7 @@ authors = ["smithworks-cli"]
 python = "~3.8"
 django = "~3.0.5"
 django-tailwind = "~0.7.1"
+django-phone-field = "~1.8.0"
 python-digitalocean = "^1.15.0"
 uuid = "^1.30"
 
