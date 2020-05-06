@@ -16,13 +16,14 @@ Including another URLconf
 from django.urls import path
 
 from account.views import registration_view
-from smithworks.views import dashboard, profile, save_profile
+from smithworks.views import dashboard, profile, save_profile, login
 
 # Smithworks URLs
 urlpatterns = [
     path("dashboard/", dashboard, name="dashboard"),
     path("profile/", profile, name="profile"),
     path("save_profile/", save_profile, name="save_profile"),
+    path("", login, name="login")
 ]
 
 # Alternate view folders
